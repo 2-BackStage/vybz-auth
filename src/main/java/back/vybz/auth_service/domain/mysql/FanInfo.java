@@ -1,5 +1,6 @@
 package back.vybz.auth_service.domain.mysql;
 
+import back.vybz.auth_service.common.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "fan_info")
 @Getter
 @NoArgsConstructor
-public class FanInfo {
+public class FanInfo extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
