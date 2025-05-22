@@ -13,7 +13,7 @@ import java.util.Date;
 @Getter
 @Table(name = "busker_info")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class BuskerInfo extends BaseEntity {
+public class Busker extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -57,7 +57,7 @@ public class BuskerInfo extends BaseEntity {
 
 
     @Builder
-    public BuskerInfo(Long id, String userUuid, String email, String password, Long categoryId, String nickname, Date birthDate) {
+    public Busker(Long id, String userUuid, String email, String password, Long categoryId, String nickname, Date birthDate) {
         this.id = id;
         this.userUuid = userUuid;
         this.email = email;
