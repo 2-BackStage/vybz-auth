@@ -5,9 +5,9 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum SocialType {
-    GOOGLE("구글"),
-    KAKAO("카카오");
+public enum Role {
+    USER("일반 사용자"),
+    BUSKER("버스커");
 
-    private final String type;
+    private final String roleName;
 }

@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "fan_info")
+@Table(name = "user")
 @Getter
 @NoArgsConstructor
 public class User extends BaseEntity {
@@ -23,31 +23,55 @@ public class User extends BaseEntity {
     private String userUuid;
 
     /**
-     * 유저 id
-     */
-    @Column(name = "user_id", nullable = false, unique = true)
-    private String userId;
-
-    /**
      * 소셜 타입
      */
-    @Column(name = "type", nullable = false)
+    @Column(name = "type")
     @Enumerated(EnumType.STRING)
     private SocialType socialType;
 
     /**
      * 소셜 id
      */
-    @Column(name = "provider_id", nullable = false)
+    @Column(name = "provider_id", unique = true)
     private String providerId;
 
+    /**
+     * 이메일
+     */
+    @Column(name = "email")
+    private String email;
+
+    /**
+     * 패스워드
+     */
+    @Column(name = "password")
+    private String password;
+
+    /**
+     * 역할
+     */
+    @Column(name = "role", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+    /**
+     * 사용자 상태
+     */
+    @Column(name = "status", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
     @Builder
-    public User(Long id, String userUuid, String userId,
-                SocialType socialType, String providerId) {
+    public User(Long id, String userUuid, SocialType socialType, String providerId,
+                String email, String password,
+                Role role, Status status) {
         this.id = id;
         this.userUuid = userUuid;
-        this.userId = userId;
         this.socialType = socialType;
         this.providerId = providerId;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.status = status;
     }
 }

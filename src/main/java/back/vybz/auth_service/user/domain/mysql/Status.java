@@ -5,9 +5,10 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum SocialType {
-    GOOGLE("구글"),
-    KAKAO("카카오");
+public enum Status {
+    WITHDRAWAL("탈퇴"),
+    ACTIVE("정상"),
+    BANNED("차단");
 
-    private final String type;
+    private final String status;
 }

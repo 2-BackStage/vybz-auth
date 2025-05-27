@@ -22,7 +22,7 @@ public record BaseResponseEntity<T>(@Schema(hidden = true) HttpStatusCode httpSt
     }
 
     /**
-     * 2. Return 객체가 필요 없는 경우 -> 성공
+     * 2. Return 객체가 필요 없는 경우 -> 성공x
      */
     public BaseResponseEntity() {
         this(HttpStatus.OK, true, "SUCCESS", 200, null);
