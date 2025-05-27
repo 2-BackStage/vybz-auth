@@ -47,7 +47,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             jwt = authHeader.substring(7);
 
             // 토큰 유효성 검증
-            if (!jwtProvider.validateToken(jwt)) {
+            if (!jwtProvider.isInvalidToken(jwt)) {
                 throw new RuntimeException("만료되었거나 위조된 토큰입니다.");
             }
 
