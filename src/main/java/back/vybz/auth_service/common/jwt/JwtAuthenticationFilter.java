@@ -1,7 +1,7 @@
 package back.vybz.auth_service.common.jwt;
 
 import back.vybz.auth_service.common.util.RedisUtil;
-import back.vybz.auth_service.user.application.AuthService;
+import back.vybz.auth_service.busker.application.AuthService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

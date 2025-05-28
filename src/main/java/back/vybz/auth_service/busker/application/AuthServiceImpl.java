@@ -1,7 +1,7 @@
-package back.vybz.auth_service.user.application;
+package back.vybz.auth_service.busker.application;
 
-import back.vybz.auth_service.user.domain.CustomUserDetails;
-import back.vybz.auth_service.user.infrastructure.AuthRepository;
+import back.vybz.auth_service.common.domain.CustomUserDetails;
+import back.vybz.auth_service.busker.infrastructure.AuthRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

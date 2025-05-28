@@ -1,12 +1,12 @@
-package back.vybz.auth_service.user.application;
+package back.vybz.auth_service.common.application;
 
 import back.vybz.auth_service.common.entity.BaseResponseStatus;
 import back.vybz.auth_service.common.exception.BaseException;
 import back.vybz.auth_service.common.jwt.JwtProvider;
 import back.vybz.auth_service.common.util.RedisUtil;
-import back.vybz.auth_service.user.domain.mysql.User;
+import back.vybz.auth_service.common.domain.mysql.User;
 import back.vybz.auth_service.user.dto.out.ResponseOAuthSignInDto;
-import back.vybz.auth_service.user.infrastructure.AuthRepository;
+import back.vybz.auth_service.busker.infrastructure.AuthRepository;
 import back.vybz.auth_service.user.vo.in.RequestReissueVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

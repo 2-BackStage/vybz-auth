@@ -2,9 +2,8 @@ package back.vybz.auth_service.user.presentation;
 
 import back.vybz.auth_service.common.entity.BaseResponseEntity;
 import back.vybz.auth_service.common.entity.BaseResponseStatus;
-import back.vybz.auth_service.common.exception.BaseException;
 import back.vybz.auth_service.user.application.OAuthService;
-import back.vybz.auth_service.user.application.ReissueService;
+import back.vybz.auth_service.common.application.ReissueService;
 import back.vybz.auth_service.user.dto.in.RequestOAuthSignInDto;
 import back.vybz.auth_service.user.dto.in.RequestOAuthSignOutDto;
 import back.vybz.auth_service.user.dto.out.ResponseOAuthSignInDto;
@@ -25,8 +24,8 @@ public class OAuthController {
     private final ReissueService reissueService;
 
     @Operation(
-            summary = "카카오 로그인 API",
-            description = "카카오 로그인 API 입니다.",
+            summary = "소셜 로그인 API",
+            description = "소셜 로그인 API 입니다.",
             tags = {"AUTH-SERVICE"}
     )
     @PostMapping("/sign-in")

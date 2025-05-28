@@ -1,6 +1,6 @@
-package back.vybz.auth_service.user.domain.mysql;
+package back.vybz.auth_service.common.domain.mysql;
 
-import back.vybz.auth_service.common.entity.BaseEntity;
+import back.vybz.auth_service.common.entity.SoftDeletableEntity;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "user")
 @Getter
 @NoArgsConstructor
-public class User extends BaseEntity {
+public class User extends SoftDeletableEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

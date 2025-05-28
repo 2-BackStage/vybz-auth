@@ -1,13 +1,14 @@
 package back.vybz.auth_service.user.application;
 
+import back.vybz.auth_service.common.application.TokenService;
 import back.vybz.auth_service.common.entity.BaseResponseStatus;
 import back.vybz.auth_service.common.exception.BaseException;
 import back.vybz.auth_service.common.jwt.JwtProvider;
 import back.vybz.auth_service.common.util.RedisUtil;
-import back.vybz.auth_service.user.domain.mysql.Role;
-import back.vybz.auth_service.user.domain.mysql.SocialType;
-import back.vybz.auth_service.user.domain.mysql.Status;
-import back.vybz.auth_service.user.domain.mysql.User;
+import back.vybz.auth_service.common.domain.mysql.Role;
+import back.vybz.auth_service.common.domain.mysql.SocialType;
+import back.vybz.auth_service.common.domain.mysql.Status;
+import back.vybz.auth_service.common.domain.mysql.User;
 import back.vybz.auth_service.user.dto.in.RequestOAuthSignInDto;
 import back.vybz.auth_service.user.dto.in.RequestOAuthSignOutDto;
 import back.vybz.auth_service.user.dto.out.ResponseOAuthSignInDto;

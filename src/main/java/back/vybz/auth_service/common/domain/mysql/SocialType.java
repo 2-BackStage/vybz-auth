@@ -1,4 +1,4 @@
-package back.vybz.auth_service.user.domain.mysql;
+package back.vybz.auth_service.common.domain.mysql;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

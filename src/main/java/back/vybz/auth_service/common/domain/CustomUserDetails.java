@@ -1,6 +1,6 @@
-package back.vybz.auth_service.user.domain;
+package back.vybz.auth_service.common.domain;
 
-import back.vybz.auth_service.user.domain.mysql.User;
+import back.vybz.auth_service.common.domain.mysql.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
