@@ -72,7 +72,7 @@ public class JwtProvider {
         String userUuid = authentication.getName();
 
         Date now = new Date();
-        Date expiration = new Date(now.getTime() + env.getProperty("JWT.token.refresh-expire-time", Long.class));
+        Date expiration = new Date(now.getTime() + env.getProperty("JWT.token.refresh-expire-time", Long.class, 30L));
 
         return Jwts.builder()
                 .subject(userUuid)
@@ -98,7 +98,7 @@ public class JwtProvider {
         return Keys.hmacShaKeyFor(secret.getBytes());
     }
 
-    public boolean validateToken(String token) {
+    public boolean isInvalidToken(String token) {
         try {
             extractAllClaims(token);
             return true;
@@ -108,10 +108,8 @@ public class JwtProvider {
             log.warn("❌ 지원하지 않는 JWT 토큰입니다: {}", e.getMessage());
         } catch (MalformedJwtException e) {
             log.warn("❌ 잘못된 형식의 JWT 토큰입니다: {}", e.getMessage());
-        } catch (SignatureException e) {
-            log.warn("❌ JWT 서명 검증에 실패했습니다: {}", e.getMessage());
         } catch (IllegalArgumentException e) {
-            log.warn("❌ JWT claims가 비어있습니다: {}", e.getMessage());
+            log.warn("❌ JWT claims 비어있습니다: {}", e.getMessage());
         } catch (Exception e) {
             log.error("❌ JWT 토큰 검증 중 알 수 없는 오류 발생: {}", e.getMessage());
         }

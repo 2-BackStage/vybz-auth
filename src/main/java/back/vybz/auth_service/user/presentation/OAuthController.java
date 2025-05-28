@@ -2,8 +2,9 @@ package back.vybz.auth_service.user.presentation;
 
 import back.vybz.auth_service.common.entity.BaseResponseEntity;
 import back.vybz.auth_service.common.entity.BaseResponseStatus;
+import back.vybz.auth_service.common.exception.BaseException;
 import back.vybz.auth_service.user.application.OAuthService;
-import back.vybz.auth_service.common.application.ReissueService;
+import back.vybz.auth_service.user.application.ReissueService;
 import back.vybz.auth_service.user.dto.in.RequestOAuthSignInDto;
 import back.vybz.auth_service.user.dto.in.RequestOAuthSignOutDto;
 import back.vybz.auth_service.user.dto.out.ResponseOAuthSignInDto;
