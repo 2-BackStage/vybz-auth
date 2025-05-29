@@ -24,7 +24,6 @@ public class RedisConfig {
         RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
         redisStandaloneConfiguration.setHostName(properties.getHost());
         redisStandaloneConfiguration.setPort(properties.getPort());
-//        redisStandaloneConfiguration.setUsername(properties.getUsername());
         redisStandaloneConfiguration.setPassword(properties.getPassword());
 
         LettuceClientConfiguration clientConfig = LettuceClientConfiguration.builder()
