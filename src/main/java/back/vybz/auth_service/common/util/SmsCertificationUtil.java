@@ -16,13 +16,12 @@ public class SmsCertificationUtil {
     @Value("${cools.api.sender-number}")
     private String senderNumber;
 
-    // 단일 메시지 전송
     public void sendSMS(String to,  String fullMessage){
-        Message message = new Message(); // 새 메시지 객체 생성
-        message.setFrom(senderNumber); // 발신자 번호 설정
-        message.setTo(to); // 수신자 번호 설정
-        message.setText(fullMessage); // 메시지 내용 설정
+        Message message = new Message();
+        message.setFrom(senderNumber);
+        message.setTo(to);
+        message.setText(fullMessage);
 
-        defaultMessageService.sendOne(new SingleMessageSendingRequest(message)); // 메시지 발송 요청
+        defaultMessageService.sendOne(new SingleMessageSendingRequest(message));
     }
 }

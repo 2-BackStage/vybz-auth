@@ -30,29 +30,23 @@ public class ReissueService {
             throw new BaseException(BaseResponseStatus.INVALID_REFRESH_TOKEN);
         }
 
-        // String token = authorization.startsWith("Bearer ") ? authorization.substring(7) : authorization;
-
         String refreshToken = authorization.replace("Bearer ", "");
 
         if (!jwtProvider.isInvalidToken(refreshToken)) {
             throw new BaseException(BaseResponseStatus.INVALID_REFRESH_TOKEN);
         }
 
-        // 2. 사용자 UUID 추출
         String userUuid = jwtProvider.validateAndGetUserUuid(refreshToken);
 
-        // 3. Redis 저장된 Refresh Token 꺼내서 비교
         String redisToken = redisUtil.get("Refresh:" + userUuid);
 
         if (redisToken == null || !redisToken.equals(refreshToken)) {
             throw new BaseException(BaseResponseStatus.REFRESH_TOKEN_NOT_FOUND);
         }
 
-        // 4. 사용자 조회
         User user = authRepository.findByUserUuid(userUuid)
                 .orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_OAUTH));
 
-        // 5. 새 토큰 발급
         return tokenService.issueToken(user);
 
     }

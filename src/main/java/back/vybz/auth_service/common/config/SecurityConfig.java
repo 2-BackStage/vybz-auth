@@ -54,7 +54,6 @@ public class SecurityConfig {
                                         "/v3/api-docs/**",
                                         "/error",
                                         "/api/v1/oauth/sign-in",
-                                        "/api/v1/oauth/sign-out",
                                         "/api/v1/oauth/reissue",
                                         "/api/v1/busker/sign-up",
                                         "/api/v1/busker/email-code",
@@ -63,8 +62,7 @@ public class SecurityConfig {
                                         "/api/v1/busker/sms-code",
                                         "/api/v1/busker/sms-verify",
                                         "/api/v1/busker/sign-in",
-                                        "/api/v1/busker/reissue",
-                                        "/api/v1/busker/sign-out"
+                                        "/api/v1/busker/reissue"
                                 ).permitAll()
                                 .anyRequest()
                                 .authenticated()

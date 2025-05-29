@@ -23,19 +23,15 @@ public class TokenService {
 
     public ResponseSignInDto issueToken(User user) {
 
-        // Authentication 생성
         Authentication authentication = new UsernamePasswordAuthenticationToken(
                 user.getUserUuid(), null, List.of(new SimpleGrantedAuthority(user.getRole().name())));
 
-        // JWT 발급 (jwtProvider 사용)
         String accessToken = jwtProvider.createAccessToken(authentication);
         String refreshToken = jwtProvider.createRefreshToken(authentication);
 
-        // redis 저장
         redisUtil.save("Access:" + user.getUserUuid(), accessToken, 30, TimeUnit.MINUTES);
         redisUtil.save("Refresh:" + user.getUserUuid(), refreshToken, 15, TimeUnit.DAYS);
 
-        // 응답 dto 만들어 반환
         return ResponseSignInDto.builder()
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)

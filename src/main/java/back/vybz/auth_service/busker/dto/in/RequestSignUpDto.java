@@ -55,12 +55,4 @@ public class RequestSignUpDto {
                 .categoryId(requestSignUpVo.getCategoryId())
                 .build();
     }
-
-//    public BuskerCreatedEvent toBuskerCreatedEvent(String userUuid) {
-//        return BuskerCreatedEvent.builder()
-//                .userUuid(userUuid)
-//                .nickname(this.nickname)
-//                .categoryId(this.categoryId)
-//                .build();
-//    }
 }

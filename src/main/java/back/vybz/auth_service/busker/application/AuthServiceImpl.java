@@ -56,19 +56,16 @@ public class AuthServiceImpl implements AuthService {
 
         String smsVerifyKey = "sign-up-sms-Verified:" + phone;
 
-        // 이메일 인증 확인
         if (!"true".equals(redisUtil.get(emailVerifyKey))) {
             throw new BaseException(BaseResponseStatus.SIGN_UP_NOT_VERIFIED);
         }
 
-        // 전화번호 인증 확인
         if (!"true".equals(redisUtil.get(smsVerifyKey))) {
             throw new BaseException(BaseResponseStatus.SIGN_UP_NOT_SMS_VERIFIED);
         }
 
         authRepository.save(requestSignUpDto.toEntity(passwordEncoder));
 
-        // 인증 키 삭제
         redisUtil.delete(emailVerifyKey);
         redisUtil.delete(smsVerifyKey);
     }

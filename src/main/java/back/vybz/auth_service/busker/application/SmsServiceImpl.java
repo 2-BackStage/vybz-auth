@@ -80,6 +80,6 @@ public class SmsServiceImpl implements SmsService {
     }
 
     private String createCertificationCode() {
-        return String.valueOf((int)((Math.random() * 900000) + 100000)); // 6자리 랜덤 숫자
+        return String.valueOf((int)((Math.random() * 900000) + 100000));
     }
 }

@@ -1,10 +1,8 @@
 package back.vybz.auth_service.busker.vo.in;
 
 import back.vybz.auth_service.common.pattern.RegexPatterns;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -13,8 +11,10 @@ import lombok.NoArgsConstructor;
 public class RequestSignUpVo {
 
     @NotBlank
-    @Size(min=10, max=30, message = "이메일은 10자 이상 30자 이하로 입력해주세요.")
-    @Email(message = "올바른 이메일 형식을 입력해주세요.")
+    @Pattern(
+            regexp = RegexPatterns.EMAIL,
+            message = "이메일은 10자 이상 30자 이하로 입력해주세요"
+    )
     private String email;
 
 
@@ -38,7 +38,7 @@ public class RequestSignUpVo {
     @NotBlank
     @Pattern(
             regexp = RegexPatterns.NICKNAME,
-            message = "닉네임은 2자 이상 20자 이하로 입력해주세요"
+            message = "닉네임은 1자 이상 20자 이하로 입력해주세요"
     )
     private String nickname;
 }
