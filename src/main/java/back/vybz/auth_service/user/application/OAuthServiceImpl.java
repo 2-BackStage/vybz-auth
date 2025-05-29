@@ -10,8 +10,7 @@ import back.vybz.auth_service.common.domain.mysql.SocialType;
 import back.vybz.auth_service.common.domain.mysql.Status;
 import back.vybz.auth_service.common.domain.mysql.User;
 import back.vybz.auth_service.user.dto.in.RequestOAuthSignInDto;
-import back.vybz.auth_service.user.dto.in.RequestOAuthSignOutDto;
-import back.vybz.auth_service.user.dto.out.ResponseOAuthSignInDto;
+import back.vybz.auth_service.common.dto.ResponseSignInDto;
 import back.vybz.auth_service.user.infrastructure.OAuthRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,11 +30,11 @@ public class OAuthServiceImpl implements OAuthService {
 
     private final JwtProvider jwtProvider;
 
-    private final RedisUtil redisUtil;
+    private final RedisUtil<String> redisUtil;
 
     @Transactional
     @Override
-    public ResponseOAuthSignInDto signIn(RequestOAuthSignInDto requestOAuthSignInDto) {
+    public ResponseSignInDto signIn(RequestOAuthSignInDto requestOAuthSignInDto) {
 
         String providerId = requestOAuthSignInDto.getProviderId();
         String email = requestOAuthSignInDto.getEmail();
@@ -61,9 +60,7 @@ public class OAuthServiceImpl implements OAuthService {
 
     @Transactional
     @Override
-    public void signOut(RequestOAuthSignOutDto requestOAuthSignOutDto) {
-
-        String refreshToken = requestOAuthSignOutDto.getRefreshToken();
+    public void signOut(String refreshToken) {
 
         if (refreshToken == null || !refreshToken.startsWith("Bearer ")) {
             throw new BaseException(BaseResponseStatus.INVALID_REFRESH_TOKEN);

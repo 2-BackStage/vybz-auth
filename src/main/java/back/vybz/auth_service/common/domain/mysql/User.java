@@ -42,6 +42,12 @@ public class User extends SoftDeletableEntity {
     private String email;
 
     /**
+     * 전화번호
+     */
+    @Column(name = "number", unique = true)
+    private String phoneNumber;
+
+    /**
      * 패스워드
      */
     @Column(name = "password")
@@ -63,13 +69,14 @@ public class User extends SoftDeletableEntity {
 
     @Builder
     public User(Long id, String userUuid, SocialType socialType, String providerId,
-                String email, String password,
+                String email, String phoneNumber, String password,
                 Role role, Status status) {
         this.id = id;
         this.userUuid = userUuid;
         this.socialType = socialType;
         this.providerId = providerId;
         this.email = email;
+        this.phoneNumber = phoneNumber;
         this.password = password;
         this.role = role;
         this.status = status;

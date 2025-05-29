@@ -1,6 +1,6 @@
 package back.vybz.auth_service.busker.dto.in;
 
-import back.vybz.auth_service.busker.dto.SendEmailPurpose;
+import back.vybz.auth_service.busker.dto.SendPurpose;
 import back.vybz.auth_service.busker.vo.in.RequestVerificationEmailVo;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,10 +14,10 @@ public class RequestVerificationEmailDto {
 
     private String verificationCode;
 
-    private SendEmailPurpose purpose;
+    private SendPurpose purpose;
 
     @Builder
-    public RequestVerificationEmailDto(String email, String verificationCode, SendEmailPurpose purpose) {
+    public RequestVerificationEmailDto(String email, String verificationCode, SendPurpose purpose) {
         this.email = email;
         this.verificationCode = verificationCode;
         this.purpose = purpose;
@@ -27,7 +27,7 @@ public class RequestVerificationEmailDto {
         return RequestVerificationEmailDto.builder()
                 .email(requestVerificationEmailVo.getEmail())
                 .verificationCode(requestVerificationEmailVo.getVerificationCode())
-                .purpose(SendEmailPurpose.valueOf(requestVerificationEmailVo.getPurpose().toUpperCase()))
+                .purpose(SendPurpose.valueOf(requestVerificationEmailVo.getPurpose().toUpperCase()))
                 .build();
     }
 }

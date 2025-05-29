@@ -37,7 +37,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         final String jwt;
         final String uuid;
 
-        // 요청 헤더에서 토큰 꺼내기.
+        // 요청 헤더에서 토큰 꺼내기
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
@@ -84,6 +84,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
-        return request.getRequestURI().equals("/api/v1/auth/reissue");
+        String uri = request.getRequestURI();
+        return uri.equals("/api/v1/busker/reissue") ||
+                uri.equals("/api/v1/busker/sign-out") ||
+                uri.equals("/api/v1/oauth/reissue") ||
+                uri.equals("/api/v1/oauth/sign-out");
     }
+
 }

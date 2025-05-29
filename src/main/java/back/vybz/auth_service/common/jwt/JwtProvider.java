@@ -54,7 +54,7 @@ public class JwtProvider {
                 .orElseThrow(() -> new IllegalArgumentException("권한이 없습니다."));
 
         Date now = new Date();
-        Date expiration = new Date(now.getTime() + env.getProperty("JWT.token.access-expire-time", Long.class));
+    Date expiration = new Date(now.getTime() + env.getProperty("JWT.token.access-expire-time", Long.class, 1800000L));
 
         return Jwts.builder()
                 .claim("uuid", userUuid)
@@ -72,7 +72,7 @@ public class JwtProvider {
         String userUuid = authentication.getName();
 
         Date now = new Date();
-        Date expiration = new Date(now.getTime() + env.getProperty("JWT.token.refresh-expire-time", Long.class, 30L));
+        Date expiration = new Date(now.getTime() + env.getProperty("JWT.token.refresh-expire-time", Long.class, 1296000000L));
 
         return Jwts.builder()
                 .subject(userUuid)

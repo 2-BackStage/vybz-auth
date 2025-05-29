@@ -50,16 +50,22 @@ public class SecurityConfig {
                 .authorizeHttpRequests(
                         authorizeRequests -> authorizeRequests
                                 .requestMatchers(
-                                        "/api/v1/auth/**",
-                                        "/api/v1/oauth/**",
-                                        "/auth/**",
                                         "/swagger-ui/**",
                                         "/v3/api-docs/**",
-                                        "/error"
-                                )
-                                .permitAll()
-                                .requestMatchers("/api/v1/user/**").hasRole("USER")
-                                .requestMatchers("/api/v1/busker/**").hasRole("BUSKER")
+                                        "/error",
+                                        "/api/v1/oauth/sign-in",
+                                        "/api/v1/oauth/sign-out",
+                                        "/api/v1/oauth/reissue",
+                                        "/api/v1/busker/sign-up",
+                                        "/api/v1/busker/email-code",
+                                        "/api/v1/busker/email-verify",
+                                        "/api/v1/busker/check/email",
+                                        "/api/v1/busker/sms-code",
+                                        "/api/v1/busker/sms-verify",
+                                        "/api/v1/busker/sign-in",
+                                        "/api/v1/busker/reissue",
+                                        "/api/v1/busker/sign-out"
+                                ).permitAll()
                                 .anyRequest()
                                 .authenticated()
                 )
