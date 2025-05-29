@@ -41,20 +41,17 @@ public class JwtProvider {
                 .getPayload();
     }
 
-    // 로그인 시 accessToken 발급 (uuid, role 담아서 JWT 토큰 생성)
     public String createAccessToken(Authentication authentication) {
 
-        // 1. 사용자 정보 추출 - userUuid
         String userUuid = authentication.getName();
 
-        // 1. 사용자 정보 추출 - role
         String role = authentication.getAuthorities().stream()
                 .findFirst()
                 .map(GrantedAuthority::getAuthority)
                 .orElseThrow(() -> new IllegalArgumentException("권한이 없습니다."));
 
         Date now = new Date();
-        Date expiration = new Date(now.getTime() + env.getProperty("JWT.token.access-expire-time", Long.class));
+    Date expiration = new Date(now.getTime() + env.getProperty("JWT.token.access-expire-time", Long.class, 1800000L));
 
         return Jwts.builder()
                 .claim("uuid", userUuid)
@@ -66,13 +63,12 @@ public class JwtProvider {
                 .compact();
     }
 
-    // refreshToken 발급
     public String createRefreshToken(Authentication authentication) {
 
         String userUuid = authentication.getName();
 
         Date now = new Date();
-        Date expiration = new Date(now.getTime() + env.getProperty("JWT.token.refresh-expire-time", Long.class, 30L));
+        Date expiration = new Date(now.getTime() + env.getProperty("JWT.token.refresh-expire-time", Long.class, 1296000000L));
 
         return Jwts.builder()
                 .subject(userUuid)
@@ -92,7 +88,6 @@ public class JwtProvider {
         }
     }
 
-    // JWT 서명에 사용할 비밀키(SecretKey) 반환
     public SecretKey getSignKey() {
         String secret = env.getProperty("JWT.secret-key");
         return Keys.hmacShaKeyFor(secret.getBytes());
@@ -111,7 +106,7 @@ public class JwtProvider {
         } catch (IllegalArgumentException e) {
             log.warn("❌ JWT claims 비어있습니다: {}", e.getMessage());
         } catch (Exception e) {
-            log.error("❌ JWT 토큰 검증 중 알 수 없는 오류 발생: {}", e.getMessage());
+            log.warn("❌ 유효하지 않은 JWT: {}", e.getMessage());
         }
         return false;
     }

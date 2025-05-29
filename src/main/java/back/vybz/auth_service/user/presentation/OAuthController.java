@@ -1,16 +1,13 @@
 package back.vybz.auth_service.user.presentation;
 
+import back.vybz.auth_service.common.application.ReissueService;
 import back.vybz.auth_service.common.entity.BaseResponseEntity;
 import back.vybz.auth_service.common.entity.BaseResponseStatus;
-import back.vybz.auth_service.common.exception.BaseException;
 import back.vybz.auth_service.user.application.OAuthService;
-import back.vybz.auth_service.user.application.ReissueService;
 import back.vybz.auth_service.user.dto.in.RequestOAuthSignInDto;
-import back.vybz.auth_service.user.dto.in.RequestOAuthSignOutDto;
-import back.vybz.auth_service.user.dto.out.ResponseOAuthSignInDto;
+import back.vybz.auth_service.common.dto.ResponseSignInDto;
 import back.vybz.auth_service.user.vo.in.RequestOAuthSignInVo;
-import back.vybz.auth_service.user.vo.in.RequestReissueVo;
-import back.vybz.auth_service.user.vo.out.ResponseOAuthSignInVo;
+import back.vybz.auth_service.common.vo.ResponseSignInVo;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -25,46 +22,47 @@ public class OAuthController {
     private final ReissueService reissueService;
 
     @Operation(
-            summary = "카카오 로그인 API",
-            description = "카카오 로그인 API 입니다.",
-            tags = {"AUTH-SERVICE"}
+            summary = "User 소셜 로그인 API",
+            description = "User 소셜 로그인 API 입니다.",
+            tags = {"OAUTH-SERVICE"}
     )
     @PostMapping("/sign-in")
-    public BaseResponseEntity<ResponseOAuthSignInVo> signIn(
+    public BaseResponseEntity<ResponseSignInVo> signIn(
             @RequestBody RequestOAuthSignInVo requestOAuthSignInVo
             ) {
 
         RequestOAuthSignInDto dto = RequestOAuthSignInDto.from(requestOAuthSignInVo);
 
-        ResponseOAuthSignInDto resultDto = oAuthService.signIn(dto);
+        ResponseSignInDto resultDto = oAuthService.signIn(dto);
 
-        return new BaseResponseEntity<>(ResponseOAuthSignInVo.from(resultDto));
+        return new BaseResponseEntity<>(ResponseSignInVo.from(resultDto));
     }
 
     @Operation(
-            summary = "액세스 토큰 재발급 API",
-            description = "리프레시 토큰을 이용해 액세스 토큰을 재발급하는 API 입니다.",
-            tags = {"AUTH-SERVICE"}
+            summary = "User 액세스 토큰 재발급 API",
+            description = "User 리프레시 토큰을 이용해 액세스 토큰을 재발급하는 API 입니다.",
+            tags = {"OAUTH-SERVICE"}
     )
     @PostMapping("/reissue")
-    public BaseResponseEntity<ResponseOAuthSignInVo> reissue(
-            @RequestBody RequestReissueVo requestReissueVo) {
+    public BaseResponseEntity<ResponseSignInVo> reissue(
+            @RequestHeader("Authorization") String authorization
+    ) {
 
-        ResponseOAuthSignInDto result = reissueService.reissue(requestReissueVo);
+        ResponseSignInDto resultDto = reissueService.reissue(authorization);
 
-        return new BaseResponseEntity<>( ResponseOAuthSignInVo.from(result));
+        return new BaseResponseEntity<>(ResponseSignInVo.from(resultDto));
     }
 
     @Operation(
-            summary = "로그아웃 API",
-            description = "로그아웃을 위한 API 입니다.",
-            tags = {"AUTH-SERVICE"}
+            summary = "User 로그아웃 API",
+            description = "User 로그아웃을 위한 API 입니다.",
+            tags = {"OAUTH-SERVICE"}
     )
-    @DeleteMapping("/sign-out")
+    @PostMapping("/sign-out")
     public BaseResponseEntity<Void> logout(
-            @RequestBody RequestOAuthSignOutDto requestOAuthSignOutDto
+            @RequestHeader("Authorization") String authorization
     ) {
-        oAuthService.signOut(requestOAuthSignOutDto);
+        oAuthService.signOut(authorization);
 
         return new BaseResponseEntity<>(BaseResponseStatus.SUCCESS);
     }

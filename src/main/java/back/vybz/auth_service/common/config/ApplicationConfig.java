@@ -2,8 +2,8 @@ package back.vybz.auth_service.common.config;
 
 import back.vybz.auth_service.common.entity.BaseResponseStatus;
 import back.vybz.auth_service.common.exception.BaseException;
-import back.vybz.auth_service.user.domain.CustomUserDetails;
-import back.vybz.auth_service.user.infrastructure.AuthRepository;
+import back.vybz.auth_service.common.domain.CustomUserDetails;
+import back.vybz.auth_service.busker.infrastructure.AuthRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

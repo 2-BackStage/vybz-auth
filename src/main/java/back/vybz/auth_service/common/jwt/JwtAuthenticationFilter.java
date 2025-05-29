@@ -1,7 +1,7 @@
 package back.vybz.auth_service.common.jwt;
 
 import back.vybz.auth_service.common.util.RedisUtil;
-import back.vybz.auth_service.user.application.AuthService;
+import back.vybz.auth_service.busker.application.AuthService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -32,12 +32,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             HttpServletResponse response,
             FilterChain filterChain) throws ServletException, IOException {
 
-        // HTTP 요청 헤더에서 JWT 토큰을 꺼냄
         final String authHeader = request.getHeader("Authorization");
         final String jwt;
         final String uuid;
 
-        // 요청 헤더에서 토큰 꺼내기.
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
@@ -46,14 +44,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         try {
             jwt = authHeader.substring(7);
 
-            // 토큰 유효성 검증
-            if (!jwtProvider.isInvalidToken(jwt)) {
+            if (jwtProvider.isInvalidToken(jwt)) {
                 throw new RuntimeException("만료되었거나 위조된 토큰입니다.");
             }
 
             uuid = jwtProvider.extractClaim(jwt, claims -> claims.get("uuid", String.class));
 
-            // accessToken -> Redis 유효성 검증
             if ("access".equals(jwtProvider.extractTokenType(jwt))) {
                 String redisAccessToken = redisUtil.get("Access:" + uuid);
 
@@ -62,7 +58,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 }
             }
 
-            // 인증 안 되어 있으면 SecurityContext 인증 정보 수동으로 객체로 넣기
             if (SecurityContextHolder.getContext().getAuthentication() == null) {
                 UserDetails userDetails = authService.loadUserByUuid(uuid);
                 UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
@@ -84,6 +79,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
-        return request.getRequestURI().equals("/api/v1/auth/reissue");
+        String uri = request.getRequestURI();
+        return uri.equals("/api/v1/busker/reissue") ||
+                uri.equals("/api/v1/busker/sign-out") ||
+                uri.equals("/api/v1/oauth/reissue") ||
+                uri.equals("/api/v1/oauth/sign-out");
     }
+
 }

@@ -1,9 +1,9 @@
-package back.vybz.auth_service.user.application;
+package back.vybz.auth_service.common.application;
 
 import back.vybz.auth_service.common.jwt.JwtProvider;
 import back.vybz.auth_service.common.util.RedisUtil;
-import back.vybz.auth_service.user.domain.mysql.User;
-import back.vybz.auth_service.user.dto.out.ResponseOAuthSignInDto;
+import back.vybz.auth_service.common.domain.mysql.User;
+import back.vybz.auth_service.common.dto.ResponseSignInDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -21,22 +21,18 @@ public class TokenService {
 
     private final RedisUtil<String> redisUtil;
 
-    public ResponseOAuthSignInDto issueToken(User user) {
+    public ResponseSignInDto issueToken(User user) {
 
-        // Authentication 생성
         Authentication authentication = new UsernamePasswordAuthenticationToken(
                 user.getUserUuid(), null, List.of(new SimpleGrantedAuthority(user.getRole().name())));
 
-        // JWT 발급 (jwtProvider 사용)
         String accessToken = jwtProvider.createAccessToken(authentication);
         String refreshToken = jwtProvider.createRefreshToken(authentication);
 
-        // redis 저장
         redisUtil.save("Access:" + user.getUserUuid(), accessToken, 30, TimeUnit.MINUTES);
         redisUtil.save("Refresh:" + user.getUserUuid(), refreshToken, 15, TimeUnit.DAYS);
 
-        // 응답 dto 만들어 반환
-        return ResponseOAuthSignInDto.builder()
+        return ResponseSignInDto.builder()
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
                 .userUuid(user.getUserUuid())

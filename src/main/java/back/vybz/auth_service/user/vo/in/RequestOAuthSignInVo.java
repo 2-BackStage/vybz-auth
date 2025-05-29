@@ -14,10 +14,14 @@ public class RequestOAuthSignInVo {
 
     private String email;
 
+    private String nickname;
+
     @Builder
-    public RequestOAuthSignInVo(String provider, String providerId, String email) {
+    public RequestOAuthSignInVo(String provider, String providerId,
+                                String email, String nickname) {
         this.provider = provider;
         this.providerId = providerId;
         this.email = email;
+        this.nickname = nickname;
     }
 }

@@ -1,16 +1,17 @@
-package back.vybz.auth_service.user.application;
+package back.vybz.auth_service.common.application;
 
 import back.vybz.auth_service.common.entity.BaseResponseStatus;
 import back.vybz.auth_service.common.exception.BaseException;
 import back.vybz.auth_service.common.jwt.JwtProvider;
 import back.vybz.auth_service.common.util.RedisUtil;
-import back.vybz.auth_service.user.domain.mysql.User;
-import back.vybz.auth_service.user.dto.out.ResponseOAuthSignInDto;
-import back.vybz.auth_service.user.infrastructure.AuthRepository;
-import back.vybz.auth_service.user.vo.in.RequestReissueVo;
+import back.vybz.auth_service.common.domain.mysql.User;
+import back.vybz.auth_service.common.dto.ResponseSignInDto;
+import back.vybz.auth_service.busker.infrastructure.AuthRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ReissueService {
@@ -23,34 +24,30 @@ public class ReissueService {
 
     private final TokenService tokenService;
 
-    public ResponseOAuthSignInDto reissue(RequestReissueVo requestReissueVo) {
+    public ResponseSignInDto reissue(String authorization) {
 
-        String bearerToken = requestReissueVo.getRefreshToken();
-
-        if (bearerToken == null || !bearerToken.startsWith("Bearer ")) {
+        if (authorization == null || !authorization.startsWith("Bearer ")) {
             throw new BaseException(BaseResponseStatus.INVALID_REFRESH_TOKEN);
         }
 
-        String refreshToken = bearerToken.replace("Bearer ", "");
+        String refreshToken = authorization.replace("Bearer ", "");
 
-        if (!jwtProvider.validateToken(refreshToken)) {
+        if (!jwtProvider.isInvalidToken(refreshToken)) {
             throw new BaseException(BaseResponseStatus.INVALID_REFRESH_TOKEN);
         }
 
-        // 2. 사용자 UUID 추출
         String userUuid = jwtProvider.validateAndGetUserUuid(refreshToken);
 
-        // 3. Redis 저장된 Refresh Token 꺼내서 비교
         String redisToken = redisUtil.get("Refresh:" + userUuid);
+
         if (redisToken == null || !redisToken.equals(refreshToken)) {
             throw new BaseException(BaseResponseStatus.REFRESH_TOKEN_NOT_FOUND);
         }
 
-        // 4. 사용자 조회
         User user = authRepository.findByUserUuid(userUuid)
                 .orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_OAUTH));
 
-        // 5. 새 토큰 발급
         return tokenService.issueToken(user);
+
     }
 }

@@ -22,40 +22,46 @@ repositories {
 }
 
 dependencies {
-	// Swagger
-	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0'
+    // Swagger
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0'
 
-	// security
-	implementation 'org.springframework.boot:spring-boot-starter-security'
+    // security
+    implementation 'org.springframework.boot:spring-boot-starter-security'
 
-	//	jwt
-	implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.12.5'
-	implementation group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.12.5'
-	implementation group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.12.5'
+    //	jwt
+    implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.12.5'
+    implementation group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.12.5'
+    implementation group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.12.5'
 
-	// redis
-	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    // redis
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
-	//json
-	implementation 'org.json:json:20231013'
+    //json
+    implementation 'org.json:json:20231013'
 
-	implementation 'org.springframework.boot:spring-boot-starter'
+    // mail
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
 
-	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+    // CoolSMS
+    implementation 'net.nurigo:sdk:4.3.0'
 
-	implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter'
 
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 
-	runtimeOnly 'com.mysql:mysql-connector-j'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
 
-	compileOnly 'org.projectlombok:lombok'
-	annotationProcessor 'org.projectlombok:lombok'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-	testAnnotationProcessor 'org.projectlombok:lombok'
-	testImplementation 'org.springframework.security:spring-security-test'
+    runtimeOnly 'com.mysql:mysql-connector-j'
+
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    testAnnotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.security:spring-security-test'
 }
 
 dependencyManagement {
